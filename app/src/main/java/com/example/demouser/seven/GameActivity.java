@@ -31,6 +31,11 @@ public class GameActivity extends AppCompatActivity {
 
             else if(chosenNum.equals("draw2")){
 
+                // other player draws 2
+                drawCard(2);
+                changeTurn();
+                return true;
+
             }
             else{
                 changeTurn();
@@ -39,10 +44,27 @@ public class GameActivity extends AppCompatActivity {
 
         }
         else if(cardChosen.equals("wild")){
+
+
             // give the user a window to choose color
+            changeTurn();
+
+            return true;
+        }
+
+        else if(cardChosen.equals("wild4")){
+
+            // window to choose color
+            //other player draw 4
+            drawCard(4);
+            changeTurn();
+            return true;
         }
         else{
 
+
+            // message pop up? "can't put that card down bro"
+            return false;
         }
 
     }
@@ -55,6 +77,15 @@ public class GameActivity extends AppCompatActivity {
             p1Turn = true;
         }
     }
+
+    private void drawCard(int numCards){
+        for(int i = numCards; i <= 0; i--){
+           // getRandomCard();
+        }
+    }
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
