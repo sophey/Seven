@@ -2,8 +2,11 @@ package com.example.demouser.seven;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +63,6 @@ public class GameActivity extends AppCompatActivity {
                 changeTurn();
                 return true;
             }
-
         } else if (cardChosen.equals("wild")) {
             // give the user a window to choose color
         } else {
@@ -70,11 +72,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void changeTurn() {
-        if (p1Turn) {
-            p1Turn = false;
-        } else {
-            p1Turn = true;
-        }
+        p1Turn = !p1Turn;
     }
 
     private void initDeck() {
@@ -159,6 +157,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void displayCards() {
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 160);
+
+
         // get the linear layout of p1's cards
         LinearLayout p1Cards = (LinearLayout) findViewById(R.id.player_1_cards);
 
@@ -166,11 +167,19 @@ public class GameActivity extends AppCompatActivity {
         p1Cards.removeAllViews();
 
         // go through all of p1's cards and add them to the layout
-        for (String card : player1Cards) {
+        for (final String card : player1Cards) {
             ImageButton ib = new ImageButton(this);
             int resId = getResources().getIdentifier(card, "drawable",
                     GameActivity.this.getPackageName());
+            ib.setScaleType(ImageView.ScaleType.FIT_XY);
             ib.setImageResource(resId);
+            ib.setLayoutParams(layoutParams);
+            ib.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    playCard(card);
+                }
+            });
             p1Cards.addView(ib);
         }
 
@@ -182,9 +191,27 @@ public class GameActivity extends AppCompatActivity {
 
         // go through all of p1's cards and add them to the layout
         for (String card : player2Cards) {
-            ImageButton ib = new ImageButton(this);
+            ImageView ib = new ImageView(this);
             ib.setImageResource(R.drawable.card_back);
+            ib.setLayoutParams(layoutParams);
+            ib.setLayoutParams(layoutParams);
             p2Cards.addView(ib);
+        }
+    }
+
+    private void playCard(String card) {
+        if (canPutCard(card)) {
+            if (p1Turn) {
+                player1Cards.remove(player1Cards.indexOf(card));
+                currentCard = card;
+                changeTurn();
+            } else {
+                player2Cards.remove(player2Cards.indexOf(card));
+                currentCard = card;
+                changeTurn();
+            }
+        } else {
+            // display message
         }
     }
 }
