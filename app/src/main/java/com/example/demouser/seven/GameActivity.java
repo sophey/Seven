@@ -4,18 +4,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
+    private final static int NUM_CARDS = 7;
+
     private ArrayList<String> player1Cards;
     private ArrayList<String> player2Cards;
+    private String currentCard;
     private Map<String, Integer> deck;
+    private boolean p1Turn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +27,54 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         // initialize deck
+        initVariables();
         initDeck();
 
         // deal and display cards
         dealCards();
         displayCards();
+    }
+
+    private void initVariables() {
+        player1Cards = new ArrayList<>();
+        player2Cards = new ArrayList<>();
+        currentCard = "";
+    }
+
+    private boolean canPutCard(String cardChosen) {
+        String[] currentParts = currentCard.split("-");
+        String[] chosenParts = cardChosen.split("-");
+        String currentCardColor = currentParts[0];
+        String currentCardNum = currentParts[1];
+        String chosenColor = chosenParts[0];
+        String chosenNum = chosenParts[1];
+        // compare the current card to the card chosen
+        if (currentCardColor.equals(chosenColor)) {
+            if (chosenNum.equals("skip") || chosenNum.equals("reverse")) {
+                // same turn
+                // return true
+                return true;
+            } else if (chosenNum.equals("draw2")) {
+
+            } else {
+                changeTurn();
+                return true;
+            }
+
+        } else if (cardChosen.equals("wild")) {
+            // give the user a window to choose color
+        } else {
+
+        }
+        return false;
+    }
+
+    private void changeTurn() {
+        if (p1Turn) {
+            p1Turn = false;
+        } else {
+            p1Turn = true;
+        }
     }
 
     private void initDeck() {
@@ -89,7 +136,26 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void dealCards() {
+        for (int i = 0; i < NUM_CARDS; i++) {
+            player1Cards.add(getRandomCard());
+            player2Cards.add(getRandomCard());
+        }
+    }
 
+    private String getRandomCard() {
+        int value = 0;
+        String randomKey = "";
+
+        while (value <= 0) {
+            Random random = new Random();
+            List<String> keys = new ArrayList<String>(deck.keySet());
+            randomKey = keys.get(random.nextInt(keys.size()));
+            value = deck.get(randomKey);
+        }
+
+        deck.put(randomKey, value - 1);
+
+        return randomKey;
     }
 
     private void displayCards() {
@@ -105,6 +171,20 @@ public class GameActivity extends AppCompatActivity {
             int resId = getResources().getIdentifier(card, "drawable",
                     GameActivity.this.getPackageName());
             ib.setImageResource(resId);
+            p1Cards.addView(ib);
+        }
+
+        // get the linear layout of p1's cards
+        LinearLayout p2Cards = (LinearLayout) findViewById(R.id.player_2_cards);
+
+        // remove everything in layout
+        p2Cards.removeAllViews();
+
+        // go through all of p1's cards and add them to the layout
+        for (String card : player2Cards) {
+            ImageButton ib = new ImageButton(this);
+            ib.setImageResource(R.drawable.card_back);
+            p2Cards.addView(ib);
         }
     }
 }
