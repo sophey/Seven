@@ -6,13 +6,15 @@ import android.os.Bundle;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
-
-//    public ArrayList<String> player1Cards;
+public class GameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
+
+//        ArrayList<String> player1Cards =
+//
+//        for ()
     }
 }
