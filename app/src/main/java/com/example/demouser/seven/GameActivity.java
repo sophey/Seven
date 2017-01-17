@@ -2,8 +2,11 @@ package com.example.demouser.seven;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +17,7 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity {
 
     private final static int NUM_CARDS = 7;
+    private final static String SPECIAL_CARDS = "reverse draw2 skip wild wild4";
 
     private ArrayList<String> player1Cards;
     private ArrayList<String> player2Cards;
@@ -33,6 +37,21 @@ public class GameActivity extends AppCompatActivity {
         // deal and display cards
         dealCards();
         displayCards();
+
+        ((ImageButton) findViewById(R.id.card_deck)).setOnClickListener(new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                if (p1Turn) {
+                    player1Cards.add(getRandomCard());
+                } else {
+                    player2Cards.add(getRandomCard());
+                }
+                changeTurn();
+                displayCards();
+            }
+        });
     }
 
     private void initVariables() {
@@ -42,8 +61,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private boolean canPutCard(String cardChosen) {
-        String[] currentParts = currentCard.split("-");
-        String[] chosenParts = cardChosen.split("-");
+        String[] currentParts = currentCard.split("_");
+        String[] chosenParts = cardChosen.split("_");
         String currentCardColor = currentParts[0];
         String currentCardNum = currentParts[1];
         String chosenColor = chosenParts[0];
@@ -70,11 +89,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void changeTurn() {
-        if (p1Turn) {
-            p1Turn = false;
-        } else {
-            p1Turn = true;
-        }
+        p1Turn = !p1Turn;
     }
 
     private void initDeck() {
@@ -140,6 +155,19 @@ public class GameActivity extends AppCompatActivity {
             player1Cards.add(getRandomCard());
             player2Cards.add(getRandomCard());
         }
+        String card = "";
+        while (card.equals("")) {
+            card = getRandomCard();
+            if (card.contains("wild")) {
+                card = "";
+            } else {
+                String[] arr = card.split("_");
+                if (SPECIAL_CARDS.contains(arr[1])) {
+                    card = "";
+                }
+            }
+        }
+        currentCard = card;
     }
 
     private String getRandomCard() {
@@ -159,6 +187,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void displayCards() {
+        LinearLayout.LayoutParams layoutParams = new LinearLayout
+                .LayoutParams(150, 240);
+
         // get the linear layout of p1's cards
         LinearLayout p1Cards = (LinearLayout) findViewById(R.id.player_1_cards);
 
@@ -166,25 +197,59 @@ public class GameActivity extends AppCompatActivity {
         p1Cards.removeAllViews();
 
         // go through all of p1's cards and add them to the layout
-        for (String card : player1Cards) {
+        for (final String card : player1Cards) {
             ImageButton ib = new ImageButton(this);
             int resId = getResources().getIdentifier(card, "drawable",
                     GameActivity.this.getPackageName());
             ib.setImageResource(resId);
+            ib.setScaleType(ImageView.ScaleType.FIT_XY);
+            ib.setLayoutParams(layoutParams);
+            ib.setBackgroundResource(0);
+            ib.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    playCard(card);
+                }
+            });
             p1Cards.addView(ib);
         }
 
         // get the linear layout of p1's cards
         LinearLayout p2Cards = (LinearLayout) findViewById(R.id.player_2_cards);
 
+        layoutParams = new LinearLayout.LayoutParams(75, 120);
+
         // remove everything in layout
         p2Cards.removeAllViews();
 
         // go through all of p1's cards and add them to the layout
-        for (String card : player2Cards) {
-            ImageButton ib = new ImageButton(this);
-            ib.setImageResource(R.drawable.card_back);
-            p2Cards.addView(ib);
+        for (int i = 0; i < player2Cards.size(); i++) {
+            ImageView iv = new ImageView(this);
+            iv.setImageResource(R.drawable.card_back);
+            iv.setLayoutParams(layoutParams);
+            p2Cards.addView(iv);
+        }
+
+        int resId = getResources().getIdentifier(currentCard, "drawable",
+                GameActivity.this.getPackageName());
+        ((ImageView) findViewById(R.id.current_card)).setImageResource(resId);
+    }
+
+    private void playCard(String card) {
+        if (canPutCard(card)) {
+            if (p1Turn) {
+                player1Cards.remove(player1Cards.indexOf(card));
+                currentCard = card;
+                changeTurn();
+            } else {
+                player2Cards.remove(player2Cards.indexOf(card));
+                currentCard = card;
+                changeTurn();
+            }
+            displayCards();
+        } else {
+            ((TextView) findViewById(R.id.messageText)).setText(R.string
+                    .no_placing_card);
         }
     }
 }

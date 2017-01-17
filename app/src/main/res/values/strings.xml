@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Seven</string>
+    <string name="no_placing_card">You can\'t play that card yo</string>
 </resources>
