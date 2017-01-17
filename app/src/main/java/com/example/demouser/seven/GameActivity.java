@@ -70,16 +70,12 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void changeTurn(){
-        if(p1Turn){
-            p1Turn = false;
-        }
-        else{
-            p1Turn = true;
-        }
+        p1Turn = !p1Turn;
     }
 
     private void drawCard(int numCards){
         for(int i = numCards; i <= 0; i--){
+            
            // getRandomCard();
         }
     }
@@ -92,8 +88,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-//        ArrayList<String> player1Cards =
-//
-//        for `()
+
     }
 }
