@@ -1,12 +1,16 @@
 package com.example.demouser.seven;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.gms.auth.api.Auth;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +21,7 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity {
 
     private final static int NUM_CARDS = 7;
+    private final static int TOTAL_CARDS = 108;
     private final static String SPECIAL_CARDS = "reverse draw2 skip wild wild4";
 
     private ArrayList<String> player1Cards;
@@ -24,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
     private String currentCard;
     private Map<String, Integer> deck;
     private boolean p1Turn;
+    private int numCards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +45,6 @@ public class GameActivity extends AppCompatActivity {
         displayCards();
 
         ((ImageButton) findViewById(R.id.card_deck)).setOnClickListener(new View.OnClickListener() {
-
 
             @Override
             public void onClick(View v) {
@@ -58,9 +63,39 @@ public class GameActivity extends AppCompatActivity {
         player1Cards = new ArrayList<>();
         player2Cards = new ArrayList<>();
         currentCard = "";
+        p1Turn = true;
+        numCards = TOTAL_CARDS;
     }
 
+    /**
+     * Plays the card if it can be played, and returns a whether it is played
+     * or not
+     *
+     * @param cardChosen
+     * @return
+     */
     private boolean canPutCard(String cardChosen) {
+
+        if (cardChosen.contains("wild")) {
+            // show wild card screen
+            Intent intent = new Intent(this, WildActivity.class);
+            startActivity(intent);
+
+            if (cardChosen.equals("wild4")) { // draw 4
+                ArrayList<String> hand = p1Turn ? player2Cards : player1Cards;
+                for (int i = 0; i < 4; i++) {
+                    hand.add(getRandomCard());
+                }
+            }
+
+            String color = getIntent().getStringExtra(WildActivity
+                    .COLOR_CHANGE);
+
+            ((TextView) findViewById(R.id.messageText)).setText(String.format
+                    (getString(R.string.color_change), color));
+            return true;
+        }
+
         String[] currentParts = currentCard.split("_");
         String[] chosenParts = cardChosen.split("_");
         String currentCardColor = currentParts[0];
@@ -68,24 +103,28 @@ public class GameActivity extends AppCompatActivity {
         String chosenColor = chosenParts[0];
         String chosenNum = chosenParts[1];
         // compare the current card to the card chosen
+
+        // same color means it can be played
         if (currentCardColor.equals(chosenColor)) {
             if (chosenNum.equals("skip") || chosenNum.equals("reverse")) {
-                // same turn
-                // return true
-                return true;
+                // same turn so do nothing
             } else if (chosenNum.equals("draw2")) {
-
-            } else {
-                changeTurn();
-                return true;
+                // have other player draw cards
+                if (p1Turn) {
+                    player2Cards.add(getRandomCard());
+                    player2Cards.add(getRandomCard());
+                } else {
+                    player1Cards.add(getRandomCard());
+                    player1Cards.add(getRandomCard());
+                }
+            } else { // it's a number, do nothing
             }
-
-        } else if (cardChosen.equals("wild")) {
-            // give the user a window to choose color
+            return true;
+        } else if (currentCardNum.equals(chosenNum)) { // same number
+            return true;
         } else {
-
+            return false;
         }
-        return false;
     }
 
     private void changeTurn() {
@@ -171,6 +210,22 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private String getRandomCard() {
+        if (numCards == 0) { // add cards back in deck
+            initDeck();
+            numCards = TOTAL_CARDS;
+            // get rid of visible cards
+            for (String card : player1Cards) {
+                deck.put(card, deck.get(card) - 1);
+                numCards--;
+            }
+            for (String card : player1Cards) {
+                deck.put(card, deck.get(card) - 1);
+                numCards--;
+            }
+            deck.put(currentCard, deck.get(currentCard) - 1);
+            numCards--;
+        }
+
         int value = 0;
         String randomKey = "";
 
@@ -182,6 +237,7 @@ public class GameActivity extends AppCompatActivity {
         }
 
         deck.put(randomKey, value - 1);
+        numCards--;
 
         return randomKey;
     }
@@ -236,20 +292,25 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void playCard(String card) {
+        // reset message every time a card is pressed
+        ((TextView) findViewById(R.id.messageText)).setText("");
+
         if (canPutCard(card)) {
             if (p1Turn) {
                 player1Cards.remove(player1Cards.indexOf(card));
-                currentCard = card;
-                changeTurn();
             } else {
-                player2Cards.remove(player2Cards.indexOf(card));
-                currentCard = card;
-                changeTurn();
+//                player2Cards.remove(player2Cards.indexOf(card));
             }
+            changeTurn();
+            // if the turn goes back
+            if (card.contains("reverse") || card.contains("skip"))
+                changeTurn();
+            currentCard = card;
             displayCards();
         } else {
             ((TextView) findViewById(R.id.messageText)).setText(R.string
                     .no_placing_card);
         }
     }
+
 }
