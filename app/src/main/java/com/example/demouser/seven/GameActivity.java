@@ -335,7 +335,8 @@ public class GameActivity extends AppCompatActivity {
                 GameActivity.this.getPackageName());
         ((ImageView) findViewById(R.id.current_card)).setImageResource(resId);
     }
-    private void changeTurn(){
+    private void changeTurn()
+    {
         p1Turn = !p1Turn;
     }
 
