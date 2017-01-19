@@ -1,6 +1,7 @@
 /**
  * Copyright Google Inc. All Rights Reserved.
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -9,6 +10,8 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  *
 =======
+=======
+>>>>>>> sophey/master
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +19,9 @@
  * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
+<<<<<<< HEAD
+>>>>>>> sophey/master
+=======
 >>>>>>> sophey/master
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -56,9 +62,7 @@ public class SignInActivity extends AppCompatActivity implements
     private SignInButton mSignInButton;
 
     private GoogleApiClient mGoogleApiClient;
-    
 
-    // Firebase instance variables
 
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
@@ -71,7 +75,6 @@ public class SignInActivity extends AppCompatActivity implements
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-
         // Assign fields
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
 
@@ -81,13 +84,16 @@ public class SignInActivity extends AppCompatActivity implements
         // Configure Google Sign In
 
 
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder
                 (GoogleSignInOptions.DEFAULT_SIGN_IN)
+
 
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
+
 
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
 
@@ -98,6 +104,7 @@ public class SignInActivity extends AppCompatActivity implements
                 .build();
 
         // Initialize FirebaseAuth
+
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -111,11 +118,6 @@ public class SignInActivity extends AppCompatActivity implements
                 break;
         }
     }
-
-
-
-
-
 
 
     @Override
@@ -177,5 +179,7 @@ public class SignInActivity extends AppCompatActivity implements
                     }
                 });
     }
+
 }
+
 
