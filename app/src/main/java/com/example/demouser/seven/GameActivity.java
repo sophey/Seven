@@ -36,75 +36,6 @@ public class GameActivity extends AppCompatActivity {
     private ArrayList<String> player2Deck;
 
 
-//    private boolean canPutCard( String cardChosen){
-//        String[] currentParts = currentCard.split("-");
-//        String[] chosenParts = cardChosen.split("-");
-//        String currentCardColor = currentParts[0];
-//        String currentCardNum = currentParts[1];
-//        String chosenColor = chosenParts[0];
-//        String chosenNum = chosenParts[1];
-//        // compare the current card to the card chosen
-//        if(currentCardColor.equals(chosenColor)){
-//            if(chosenNum.equals("skip") || chosenNum.equals("reverse")){
-//                // same turn
-//                // return true
-//                return true;
-//            }
-//
-//            else if(chosenNum.equals("draw2")){
-//
-//                // other player draws 2
-//                drawCard(2);
-//                changeTurn();
-//                return true;
-//
-//            }
-//            else{
-//                changeTurn();
-//                return true;
-//            }
-//
-//        }
-//        else if(cardChosen.equals("wild")){
-//
-//
-//            // give the user a window to choose color
-//            changeTurn();
-//
-//            return true;
-//        }
-//
-//        else if(cardChosen.equals("wild4")){
-//
-//            // window to choose color
-//            //other player draw 4
-//            drawCard(4);
-//            changeTurn();
-//            return true;
-//        }
-//        else{
-//
-//
-//            // message pop up? "can't put that card down bro"
-//            return false;
-//        }
-//
-//    }
-
-    private void changeTurn(){
-        p1Turn = !p1Turn;
-    }
-
-    private void drawCard(int numCards){
-        for(int i = numCards; i <= 0; i--){
-            
-           // getRandomCard();
-        }
-    }
-
-
-
-
     private final static int NUM_CARDS = 7;
     private final static int TOTAL_CARDS = 108;
     private final static String SPECIAL_CARDS = "reverse draw2 skip wild wild4";
@@ -404,6 +335,9 @@ public class GameActivity extends AppCompatActivity {
                 GameActivity.this.getPackageName());
         ((ImageView) findViewById(R.id.current_card)).setImageResource(resId);
     }
+    private void changeTurn(){
+        p1Turn = !p1Turn;
+    }
 
     private void playCard(String card) {
         // reset message every time a card is pressed
@@ -412,10 +346,17 @@ public class GameActivity extends AppCompatActivity {
         if (canPutCard(card)) {
             if (p1Turn) {
                 player1Cards.remove(player1Cards.indexOf(card));
+                checkWinner();
+
+
+
             } else {
 //                player2Cards.remove(player2Cards.indexOf(card));
+
             }
+
             changeTurn();
+
             // if the turn goes back
             if (card.contains("reverse") || card.contains("skip"))
                 changeTurn();
@@ -424,6 +365,39 @@ public class GameActivity extends AppCompatActivity {
         } else {
             ((TextView) findViewById(R.id.messageText)).setText(R.string
                     .no_placing_card);
+        }
+
+    }
+
+    private void playerWins(){
+
+        startActivity(new Intent(this, WinActivity.class));
+    }
+
+    private void playerLoses(){
+        startActivity(new Intent(this, LoseActivity.class));
+    }
+
+    private void checkWinner(){
+       // if it's player1's turn
+        if(p1Turn){
+            // and if there is no card in deck
+            if(player1Deck.size() <= 0){
+                // player wins
+                playerWins();
+            }
+            else if(player2Deck.size() <=0){
+                playerLoses();
+            }
+        }
+        else{
+            if(player2Deck.size() <=0){
+                playerWins();
+            }
+            else if(player1Deck.size() <= 0){
+                // player wins
+                playerLoses();
+            }
         }
 
     }
