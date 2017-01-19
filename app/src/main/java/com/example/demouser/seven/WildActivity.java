@@ -1,5 +1,6 @@
 package com.example.demouser.seven;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,14 +17,15 @@ public class WildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wild);
 
-        final Intent intent = new Intent(this, GameActivity.class);
+        final Intent intent = new Intent();
 
         ((Button) findViewById(R.id.red_button)).setOnClickListener(new View
                 .OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                intent.putExtra(COLOR_CHANGE, "RED");
+                intent.putExtra(COLOR_CHANGE, "red");
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });
@@ -33,7 +35,8 @@ public class WildActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                intent.putExtra(COLOR_CHANGE, "BLUE");
+                intent.putExtra(COLOR_CHANGE, "blue");
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });
@@ -43,7 +46,8 @@ public class WildActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                intent.putExtra(COLOR_CHANGE, "YELLOW");
+                intent.putExtra(COLOR_CHANGE, "yellow");
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });
@@ -53,7 +57,8 @@ public class WildActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                intent.putExtra(COLOR_CHANGE, "GREEN");
+                intent.putExtra(COLOR_CHANGE, "green");
+                setResult(Activity.RESULT_OK, intent);
                 finish();
             }
         });
