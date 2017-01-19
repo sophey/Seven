@@ -385,7 +385,7 @@ public class GameActivity extends AppCompatActivity implements
     }
 
     private void displayCards() {
-        if (checkWin()) {
+        if (game == null || checkWin()) {
             return;
         }
 
