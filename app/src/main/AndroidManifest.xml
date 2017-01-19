@@ -15,6 +15,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
 
 
         <activity android:name=".GameActivity" />
@@ -24,6 +25,14 @@
         <activity android:name=".LoseActivity"></activity>
 
 
+=======
+        <activity android:name=".GameActivity">
+        </activity>
+        <activity android:name=".WildActivity">
+        </activity>
+        <activity android:name=".SignInActivity">
+        </activity>
+>>>>>>> sophey/master
     </application>
 
 </manifest>

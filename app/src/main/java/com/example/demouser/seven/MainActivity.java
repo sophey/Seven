@@ -15,6 +15,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+<<<<<<< HEAD
 
 
 
@@ -62,6 +63,8 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.util.HashMap;
 import java.util.Map;
 
+=======
+>>>>>>> sophey/master
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -86,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private DatabaseReference mFirebaseDatabaseReference;
 //    private FirebaseRecyclerAdapter<FriendlyMessage, MessageViewHolder>
 //            mFirebaseAdapter;
+
+
 
 
 
@@ -125,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
 
+<<<<<<< HEAD
     }
 
 //    @Override
@@ -153,4 +159,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
 
 
+=======
+
+
+    }
+
+>>>>>>> sophey/master
 }

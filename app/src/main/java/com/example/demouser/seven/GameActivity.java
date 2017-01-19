@@ -347,6 +347,7 @@ public class GameActivity extends AppCompatActivity {
         if (canPutCard(card)) {
             if (p1Turn) {
                 player1Cards.remove(player1Cards.indexOf(card));
+<<<<<<< HEAD
                 checkWinner();
 
 
@@ -358,6 +359,12 @@ public class GameActivity extends AppCompatActivity {
 
             changeTurn();
 
+=======
+            } else {
+//                player2Cards.remove(player2Cards.indexOf(card));
+            }
+            changeTurn();
+>>>>>>> sophey/master
             // if the turn goes back
             if (card.contains("reverse") || card.contains("skip"))
                 changeTurn();
@@ -370,6 +377,7 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+<<<<<<< HEAD
     private void playerWins(){
 
         startActivity(new Intent(this, WinActivity.class));
@@ -403,6 +411,8 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+=======
+>>>>>>> sophey/master
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
