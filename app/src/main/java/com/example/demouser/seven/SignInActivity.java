@@ -2,6 +2,7 @@
  * Copyright Google Inc. All Rights Reserved.
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,6 +13,8 @@
 =======
 =======
 >>>>>>> sophey/master
+=======
+>>>>>>> sophey/master
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +23,9 @@
  * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> sophey/master
+=======
 >>>>>>> sophey/master
 =======
 >>>>>>> sophey/master
@@ -64,6 +70,7 @@ public class SignInActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
 
 
+
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
 
@@ -72,6 +79,7 @@ public class SignInActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -87,12 +95,11 @@ public class SignInActivity extends AppCompatActivity implements
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder
                 (GoogleSignInOptions.DEFAULT_SIGN_IN)
-
-
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
+
 
 
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
@@ -104,7 +111,6 @@ public class SignInActivity extends AppCompatActivity implements
                 .build();
 
         // Initialize FirebaseAuth
-
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -181,5 +187,4 @@ public class SignInActivity extends AppCompatActivity implements
     }
 
 }
-
 
