@@ -29,13 +29,24 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import java.util.Map;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+<<<<<<< HEAD
 public class GameActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
+=======
+
+public class GameActivity extends AppCompatActivity {
+    private ArrayList<String> player1Deck;
+    private ArrayList<String> player2Deck;
+
+>>>>>>> origin/master
 
     public final static int NUM_CARDS = 7;
     public final static String SPECIAL_CARDS = "reverse draw2 skip wild wild4";
@@ -137,11 +148,20 @@ public class GameActivity extends AppCompatActivity implements
             configureDatabase();
         }
 
+<<<<<<< HEAD
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /*
                 OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API)
                 .build();
+=======
+        setContentView(R.layout.activity_game);
+
+
+        // initialize deck
+        initVariables();
+        initDeck();
+>>>>>>> origin/master
 
         setContentView(R.layout.activity_game);
 //
@@ -376,12 +396,72 @@ public class GameActivity extends AppCompatActivity implements
         }
     }
 
+<<<<<<< HEAD
     private void changeTurn() {
         game.setPlayer1Turn(!game.isPlayer1Turn());
         String message = game.isPlayer1Turn() ? game.getPlayer1() : game
                 .getPlayer2();
         message += "'s turn!";
         game.setMessage(message);
+=======
+
+    private void initDeck() {
+        deck = new HashMap<String, Integer>();
+        deck.put("blue_0", 1);
+        deck.put("blue_1", 2);
+        deck.put("blue_2", 2);
+        deck.put("blue_3", 2);
+        deck.put("blue_4", 2);
+        deck.put("blue_5", 2);
+        deck.put("blue_6", 2);
+        deck.put("blue_7", 2);
+        deck.put("blue_8", 2);
+        deck.put("blue_9", 2);
+        deck.put("blue_draw2", 2);
+        deck.put("blue_skip", 2);
+        deck.put("blue_reverse", 2);
+        deck.put("red_0", 1);
+        deck.put("red_1", 2);
+        deck.put("red_2", 2);
+        deck.put("red_3", 2);
+        deck.put("red_4", 2);
+        deck.put("red_5", 2);
+        deck.put("red_6", 2);
+        deck.put("red_7", 2);
+        deck.put("red_8", 2);
+        deck.put("red_9", 2);
+        deck.put("red_draw2", 2);
+        deck.put("red_skip", 2);
+        deck.put("red_reverse", 2);
+        deck.put("yellow_0", 1);
+        deck.put("yellow_1", 2);
+        deck.put("yellow_2", 2);
+        deck.put("yellow_3", 2);
+        deck.put("yellow_4", 2);
+        deck.put("yellow_5", 2);
+        deck.put("yellow_6", 2);
+        deck.put("yellow_7", 2);
+        deck.put("yellow_8", 2);
+        deck.put("yellow_9", 2);
+        deck.put("yellow_draw2", 2);
+        deck.put("yellow_skip", 2);
+        deck.put("yellow_reverse", 2);
+        deck.put("green_0", 1);
+        deck.put("green_1", 2);
+        deck.put("green_2", 2);
+        deck.put("green_3", 2);
+        deck.put("green_4", 2);
+        deck.put("green_5", 2);
+        deck.put("green_6", 2);
+        deck.put("green_7", 2);
+        deck.put("green_8", 2);
+        deck.put("green_9", 2);
+        deck.put("green_draw2", 2);
+        deck.put("green_skip", 2);
+        deck.put("green_reverse", 2);
+        deck.put("wild", 4);
+        deck.put("wild4", 4);
+>>>>>>> origin/master
     }
 
     private void displayCards() {
@@ -446,6 +526,10 @@ public class GameActivity extends AppCompatActivity implements
                 GameActivity.this.getPackageName());
         ((ImageView) findViewById(R.id.current_card)).setImageResource(resId);
     }
+    private void changeTurn()
+    {
+        p1Turn = !p1Turn;
+    }
 
     private boolean isPlayer1() {
         return game.getPlayer1().equals(mUserEmail);
@@ -485,6 +569,7 @@ public class GameActivity extends AppCompatActivity implements
         // reset message every time a card is pressed
         ((TextView) findViewById(R.id.messageText)).setText("");
 
+<<<<<<< HEAD
         if (isYourTurn() && canPutCard(card)) {
             if (game.isPlayer1Turn()) {
                 game.getPlayer1Cards().remove(game.getPlayer1Cards().indexOf
@@ -492,9 +577,29 @@ public class GameActivity extends AppCompatActivity implements
             } else {
                 game.getPlayer2Cards().remove(game.getPlayer2Cards().indexOf
                         (card));
+=======
+        if (canPutCard(card)) {
+            if (p1Turn) {
+                player1Cards.remove(player1Cards.indexOf(card));
+<<<<<<< HEAD
+                checkWinner();
+
+
+
+            } else {
+//                player2Cards.remove(player2Cards.indexOf(card));
+
+>>>>>>> origin/master
             }
 
             changeTurn();
+
+=======
+            } else {
+//                player2Cards.remove(player2Cards.indexOf(card));
+            }
+            changeTurn();
+>>>>>>> sophey/master
             // if the turn goes back
             if (card.contains("reverse") || card.contains("skip") || card
                     .contains("wild4") || card.contains("draw2"))
@@ -505,6 +610,7 @@ public class GameActivity extends AppCompatActivity implements
             ((TextView) findViewById(R.id.messageText)).setText(R.string
                     .no_placing_card);
         }
+<<<<<<< HEAD
         mFirebaseDatabase.child("games").child(game.getId()).setValue(game);
     }
 
@@ -523,8 +629,47 @@ public class GameActivity extends AppCompatActivity implements
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return true;
+=======
+
     }
 
+<<<<<<< HEAD
+    private void playerWins(){
+
+        startActivity(new Intent(this, WinActivity.class));
+    }
+
+    private void playerLoses(){
+        startActivity(new Intent(this, LoseActivity.class));
+    }
+
+    private void checkWinner(){
+       // if it's player1's turn
+        if(p1Turn){
+            // and if there is no card in deck
+            if(player1Deck.size() <= 0){
+                // player wins
+                playerWins();
+            }
+            else if(player2Deck.size() <=0){
+                playerLoses();
+            }
+        }
+        else{
+            if(player2Deck.size() <=0){
+                playerWins();
+            }
+            else if(player1Deck.size() <= 0){
+                // player wins
+                playerLoses();
+            }
+        }
+
+>>>>>>> origin/master
+    }
+
+=======
+>>>>>>> sophey/master
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

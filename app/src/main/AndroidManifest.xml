@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.demouser.seven">
+    package="com.example.demouser.seven">
 
     <application
         android:allowBackup="true"
@@ -10,21 +10,36 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
+
+
+        <activity android:name=".GameActivity" />
+        <activity android:name=".WildActivity" />
+        <activity android:name=".SignInActivity" />
+        <activity android:name=".WinActivity" />
+        <activity android:name=".LoseActivity"></activity>
+
+
+=======
         <activity android:name=".GameActivity">
         </activity>
         <activity android:name=".WildActivity">
         </activity>
         <activity android:name=".SignInActivity">
         </activity>
+<<<<<<< HEAD
         <activity android:name=".WinActivity">
         </activity>
         <activity android:name=".LoseActivity">
         </activity>
+=======
+>>>>>>> sophey/master
+>>>>>>> origin/master
     </application>
 
 </manifest>

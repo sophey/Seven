@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">Seven</string>
+
     <string name="no_placing_card">You can\'t play that card yo</string>
     <string name="color_change">Color changed to %s!</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_out">Sign Out</string>
+<<<<<<< HEAD
+
+=======
+>>>>>>> sophey/master
 </resources>

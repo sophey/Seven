@@ -1,5 +1,23 @@
 /**
  * Copyright Google Inc. All Rights Reserved.
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+=======
+=======
+>>>>>>> sophey/master
+=======
+>>>>>>> sophey/master
+=======
+>>>>>>> sophey/master
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -7,6 +25,16 @@
  * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
  * <p>
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> sophey/master
+=======
+>>>>>>> sophey/master
+=======
+>>>>>>> sophey/master
+=======
+>>>>>>> sophey/master
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -47,14 +75,29 @@ public class SignInActivity extends AppCompatActivity implements
 
     private GoogleApiClient mGoogleApiClient;
 
+<<<<<<< HEAD
+
+
     // Firebase instance variables
     private FirebaseAuth mFirebaseAuth;
 
+
+=======
+    // Firebase instance variables
+    private FirebaseAuth mFirebaseAuth;
+
+>>>>>>> sophey/master
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+<<<<<<< HEAD
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+
+=======
+>>>>>>> sophey/master
         // Assign fields
         mSignInButton = (SignInButton) findViewById(R.id.sign_in_button);
 
@@ -62,19 +105,42 @@ public class SignInActivity extends AppCompatActivity implements
         mSignInButton.setOnClickListener(this);
 
         // Configure Google Sign In
+<<<<<<< HEAD
+
+
+
+=======
+>>>>>>> sophey/master
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder
                 (GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(this)
+<<<<<<< HEAD
+
+
+
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+
                 .enableAutoManage(this /* FragmentActivity */, this /*
                 OnConnectionFailedListener */)
+
+=======
+                .enableAutoManage(this /* FragmentActivity */, this /*
+                OnConnectionFailedListener */)
+>>>>>>> sophey/master
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 
         // Initialize FirebaseAuth
+<<<<<<< HEAD
+
         mFirebaseAuth = FirebaseAuth.getInstance();
+
+=======
+        mFirebaseAuth = FirebaseAuth.getInstance();
+>>>>>>> sophey/master
     }
 
     @Override
@@ -86,6 +152,10 @@ public class SignInActivity extends AppCompatActivity implements
         }
     }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> sophey/master
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         // An unresolvable error has occurred and Google APIs (including
@@ -145,4 +215,10 @@ public class SignInActivity extends AppCompatActivity implements
                     }
                 });
     }
+<<<<<<< HEAD
+
 }
+
+=======
+}
+>>>>>>> sophey/master
