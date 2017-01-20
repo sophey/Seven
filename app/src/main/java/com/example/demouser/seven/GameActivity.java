@@ -29,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -404,6 +405,7 @@ public class GameActivity extends AppCompatActivity implements
         // go through all of p1's cards and add them to the layout
         List<String> player1Cards = isPlayer1() ? game.getPlayer1Cards() :
                 game.getPlayer2Cards();
+        Collections.sort(player1Cards);
         for (final String card : player1Cards) {
             ImageButton ib = new ImageButton(this);
             int resId = getResources().getIdentifier(card, "drawable",
