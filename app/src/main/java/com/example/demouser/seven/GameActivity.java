@@ -497,7 +497,7 @@ public class GameActivity extends AppCompatActivity implements
             changeTurn();
             // if the turn goes back
             if (card.contains("reverse") || card.contains("skip") || card
-                    .contains("wild4"))
+                    .contains("wild4") || card.contains("draw2"))
                 changeTurn();
             game.setLastCard(card);
             displayCards();
